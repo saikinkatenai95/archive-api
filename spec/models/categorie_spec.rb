@@ -11,6 +11,7 @@ RSpec.describe Categorie, type: :model do
         expect(@categorie).to be_valid
       end
     end
+    
     context '新規登録できないとき'do
       it 'nameが空では登録できない' do
         @categorie.name = ''
