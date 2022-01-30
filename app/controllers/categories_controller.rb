@@ -4,43 +4,37 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Categorie.all
-    render json: @categories
+    json_response(@categories)
   end
 
   def show
-    render json: @categorie
+    json_response(@categorie)
   end
 
   def create
-    @categorie = Categorie.new(categories_params)
-    if @categorie.save
-      render json: @categorie, status: :created, location: @user
-    else
-      render json: @categorie.errors, status: :unprocessable_entity
-    end
+    @categorie = Categorie.create!(categorie_params)
+    json_response(@categorie, :created)
   end
 
   def update
-    if @categorie.update(categories_params)
-      render json: @categorie
-    else
-      render json: @categorie.errors, status: :unprocessable_entity
-    end
+    @categorie.update(categorie_params)
+    head :no_content
   end
 
   def destroy
     @categorie.destroy
+    head :no_content
   end
 
 
   private
 
   def set_categorie
-    @Categorie = Categorie.find(params[:id])
+    @categorie = Categorie.find(params[:id])
   end
 
-  def categories_params
-    params.require(:categorie).permit(:name)
+  def categorie_params
+    params.permit(:name)
   end
     
 
